@@ -1,0 +1,45 @@
+<idea-plugin>
+  <id>dev.matkoch.ideBrowser</id>
+  <name>IDE Browser</name>
+  <depends>com.intellij.modules.platform</depends>
+  <description>
+    <![CDATA[
+      Provides a simple browser tool window in your IDE.
+    ]]>
+  </description>
+  <change-notes>
+    <![CDATA[
+      <ul>
+        <li><b>1.0.0</b> Initial version.</li>
+      </ul>
+    ]]>
+  </change-notes>
+
+  <vendor url="https://matkoch.dev">Matthias Koch</vendor>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="Browser" secondary="true" icon="AllIcons.Toolwindows.WebToolWindow" anchor="right"
+                factoryClass="dev.matkoch.ideBrowser.BrowserToolWindowFactory"/>
+    <notificationGroup id="IDE Browser Notifications" displayType="BALLOON"/>
+    <stepsBeforeRunProvider implementation="dev.matkoch.ideBrowser.LaunchIdeBrowserBeforeRunTaskProvider"/>
+  </extensions>
+
+  <actions>
+    <action id="dev.matkoch.ideBrowser.OpenUrlAction"
+            class="dev.matkoch.ideBrowser.OpenUrlAction"
+            text="Open URL"
+            icon="AllIcons.General.Locate"
+            description="Browser: Open URL from Clipboard"/>
+    <action id="dev.matkoch.ideBrowser.ReloadPageAction"
+            class="dev.matkoch.ideBrowser.ReloadPageAction"
+            text="Reload Page"
+            icon="AllIcons.Actions.Refresh"
+            description="Reload current page"/>
+    <action id="dev.matkoch.ideBrowser.OpenDevToolsAction"
+            class="dev.matkoch.ideBrowser.OpenDevToolsAction"
+            text="Open DevTools"
+            icon="AllIcons.Debugger.Console"
+            description="Open JCEF DevTools"/>
+  </actions>
+
+</idea-plugin>
