@@ -17,9 +17,9 @@ class BrowserToolWindowFactory : ToolWindowFactory {
     toolWindow.contentManager.addContent(content)
 
     val actionManager = ActionManager.getInstance()
-    val openUrlAction = actionManager.getAction("org.intellij.sdk.toolWindow.OpenUrlAction")
-    val reloadAction = actionManager.getAction("org.intellij.sdk.toolWindow.ReloadPageAction")
-    val devToolsAction = actionManager.getAction("org.intellij.sdk.toolWindow.OpenDevToolsAction")
+    val openUrlAction = actionManager.getAction("dev.matkoch.ideBrowser.OpenUrlAction")
+    val reloadAction = actionManager.getAction("dev.matkoch.ideBrowser.ReloadPageAction")
+    val devToolsAction = actionManager.getAction("dev.matkoch.ideBrowser.OpenDevToolsAction")
     toolWindow.setTitleActions(listOf(openUrlAction, reloadAction, devToolsAction))
   }
 }
