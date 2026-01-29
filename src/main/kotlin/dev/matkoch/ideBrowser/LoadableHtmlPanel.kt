@@ -7,7 +7,8 @@ import com.intellij.openapi.application.invokeLater
 import com.intellij.openapi.editor.EditorBundle
 import com.intellij.openapi.util.registry.Registry
 import com.intellij.ui.components.JBLoadingPanel
-import com.intellij.ui.jcef.JBCefBrowser
+import com.intellij.ui.jcef.JBCefApp
+import com.intellij.ui.jcef.JBCefBrowserBase
 import com.intellij.ui.jcef.JCEFHtmlPanel
 import com.intellij.util.Alarm
 import org.cef.browser.CefBrowser
@@ -19,16 +20,23 @@ import javax.swing.JComponent
 
 // https://github.com/docToolchain/diagrams.net-intellij-plugin/blob/main/src/main/kotlin/de/docs_as_co/intellij/plugin/drawio/utils/LoadableJCEFHtmlPanel.kt
 class LoadableHtmlPanel(
-  url: String? = null, html: String? = null,
-  var timeoutCallback: String? = EditorBundle.message("message.html.editor.timeout")
+  url: String? = null, html: String? = null, var timeoutCallback: String? = EditorBundle.message("message.html.editor.timeout")
 ) : Disposable {
-  private val htmlPanelComponent = JCEFHtmlPanel(null)
+  private val htmlPanelComponent = JCEFHtmlPanel(
+    JBCefApp.isOffScreenRenderingModeEnabled(), null, null
+  )
+
   private val loadingPanel = JBLoadingPanel(BorderLayout(), this).apply { setLoadingText(CommonBundle.getLoadingTreeNodeText()) }
-  private val alarm = Alarm(Alarm.ThreadToUse.SWING_THREAD, this)
+  private val alarm = Alarm()
 
-  val browser: JBCefBrowser get() = htmlPanelComponent
+  val browser: JBCefBrowserBase get() = htmlPanelComponent
 
-  private val multiPanel: MultiPanel = object : com.intellij.ide.plugins.MultiPanel() {
+  companion object {
+    private const val LOADING_KEY = 1
+    private const val CONTENT_KEY = 0
+  }
+
+  private val multiPanel: MultiPanel = object : MultiPanel() {
     override fun create(key: Int) = when (key) {
       LOADING_KEY -> loadingPanel
       CONTENT_KEY -> htmlPanelComponent.component
@@ -55,7 +63,7 @@ class LoadableHtmlPanel(
   }
 
   init {
-    htmlPanelComponent.jbCefClient.addLoadHandler(object : org.cef.handler.CefLoadHandlerAdapter() {
+    htmlPanelComponent.jbCefClient.addLoadHandler(object : CefLoadHandlerAdapter() {
       override fun onLoadStart(browser: CefBrowser?, frame: CefFrame?, transitionType: CefRequest.TransitionType?) {
         alarm.addRequest({ htmlPanelComponent.setHtml(timeoutCallback!!) }, Registry.intValue("html.editor.timeout", 10000))
       }
@@ -82,11 +90,6 @@ class LoadableHtmlPanel(
 
   override fun dispose() {
     alarm.dispose()
-  }
-
-  companion object {
-    private const val LOADING_KEY = 1
-    private const val CONTENT_KEY = 0
   }
 
   val component: JComponent get() = this.multiPanel
