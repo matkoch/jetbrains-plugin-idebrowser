@@ -10,6 +10,7 @@
   <change-notes>
     <![CDATA[
       <ul>
+        <li><b>1.1.0</b> Added actions for Home, Back, and Forward.</li>
         <li><b>1.0.2</b> Fixed greedy focus.</li>
         <li><b>1.0.1</b> Fixed actions.</li>
         <li><b>1.0.0</b> Initial version.</li>
@@ -27,6 +28,21 @@
   </extensions>
 
   <actions>
+    <action id="dev.matkoch.ideBrowser.BackAction"
+            class="dev.matkoch.ideBrowser.BackAction"
+            text="Back"
+            icon="AllIcons.Actions.Back"
+            description="Go back"/>
+    <action id="dev.matkoch.ideBrowser.ForwardAction"
+            class="dev.matkoch.ideBrowser.ForwardAction"
+            text="Forward"
+            icon="AllIcons.Actions.Forward"
+            description="Go forward"/>
+    <action id="dev.matkoch.ideBrowser.HomeAction"
+            class="dev.matkoch.ideBrowser.HomeAction"
+            text="Home"
+            icon="AllIcons.Nodes.HomeFolder"
+            description="Go to home URL"/>
     <action id="dev.matkoch.ideBrowser.OpenUrlAction"
             class="dev.matkoch.ideBrowser.OpenUrlAction"
             text="Open URL"

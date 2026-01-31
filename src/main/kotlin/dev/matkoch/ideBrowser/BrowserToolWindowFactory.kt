@@ -1,6 +1,7 @@
 package dev.matkoch.ideBrowser
 
 import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.wm.ToolWindow
@@ -17,10 +18,18 @@ class BrowserToolWindowFactory : ToolWindowFactory {
     toolWindow.contentManager.addContent(content)
 
     val actionManager = ActionManager.getInstance()
-    val openUrlAction = actionManager.getAction("dev.matkoch.ideBrowser.OpenUrlAction")
-    val reloadAction = actionManager.getAction("dev.matkoch.ideBrowser.ReloadPageAction")
-    val devToolsAction = actionManager.getAction("dev.matkoch.ideBrowser.OpenDevToolsAction")
-    toolWindow.setTitleActions(listOf(openUrlAction, reloadAction, devToolsAction))
+
+    toolWindow.setTitleActions(listOf(
+      actionManager.getAction("dev.matkoch.ideBrowser.HomeAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.BackAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.ForwardAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.ReloadPageAction")
+    ))
+
+    toolWindow.setAdditionalGearActions(DefaultActionGroup(listOf(
+      actionManager.getAction("dev.matkoch.ideBrowser.OpenUrlAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.OpenDevToolsAction")
+    )))
   }
 }
 

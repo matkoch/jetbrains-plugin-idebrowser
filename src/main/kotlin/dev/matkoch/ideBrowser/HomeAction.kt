@@ -2,9 +2,8 @@ package dev.matkoch.ideBrowser
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 
-class OpenUrlAction : BrowserAction(global = true) {
+class HomeAction : BrowserAction() {
   override fun actionPerformed(e: AnActionEvent) {
-    val htmlPanel = getHtmlPanel(e) ?: return
-    htmlPanel.showUrlInput()
+    getHtmlPanel(e)?.goHome()
   }
 }
