@@ -10,6 +10,7 @@
   <change-notes>
     <![CDATA[
       <ul>
+        <li><b>1.2.1</b> Fixed internal API usages.</li>
         <li><b>1.2.0</b> Added actions to increase/decrease/reset zoom level.</li>
         <li><b>1.1.0</b> Added actions for Home, Back, and Forward.</li>
         <li><b>1.0.2</b> Fixed greedy focus.</li>

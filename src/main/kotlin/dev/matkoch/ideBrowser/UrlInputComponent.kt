@@ -3,10 +3,10 @@ package dev.matkoch.ideBrowser
 import com.intellij.openapi.actionSystem.DataSink
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.actionSystem.UiDataProvider
-import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.openapi.editor.impl.EditorHeaderComponent
-import com.intellij.ui.ExperimentalUI
+import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.ui.JBColor
+import com.intellij.ui.NewUI
 import com.intellij.ui.SearchTextField
 import com.intellij.util.ui.JBUI
 import java.awt.BorderLayout
@@ -25,7 +25,7 @@ class UrlInputComponent(
 
     private val searchField = object : SearchTextField(false, null) {
         override fun getBackground(): Color {
-            if (ExperimentalUI.isNewUI()) {
+            if (NewUI.isEnabled()) {
                 return JBColor.namedColor("Editor.SearchField.background", JBColor.background())
             }
             return super.getBackground()
@@ -40,7 +40,7 @@ class UrlInputComponent(
     }
 
     init {
-        val isNewUI = ExperimentalUI.isNewUI()
+        val isNewUI = NewUI.isEnabled()
         if (isNewUI) {
             background = JBColor.namedColor("Editor.SearchField.background", JBColor.background())
         }
