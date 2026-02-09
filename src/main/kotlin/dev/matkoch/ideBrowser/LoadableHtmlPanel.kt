@@ -126,6 +126,7 @@ class LoadableHtmlPanel(
 
       override fun onLoadEnd(browser: CefBrowser?, frame: CefFrame?, httpStatusCode: Int) {
         alarm.cancelAllRequests()
+        applyZoom()
       }
 
       override fun onLoadingStateChange(browser: CefBrowser?, isLoading: Boolean, canGoBack: Boolean, canGoForward: Boolean) {
@@ -142,6 +143,27 @@ class LoadableHtmlPanel(
         }
       }
     }, htmlPanelComponent.cefBrowser)
+  }
+
+  private var currentZoomLevel = 0.0
+
+  fun resetZoom() {
+    currentZoomLevel = 0.0
+    applyZoom()
+  }
+
+  fun increaseZoom() {
+    currentZoomLevel += 0.5
+    applyZoom()
+  }
+
+  fun decreaseZoom() {
+    currentZoomLevel -= 0.5
+    applyZoom()
+  }
+
+  private fun applyZoom() {
+    htmlPanelComponent.cefBrowser.zoomLevel = currentZoomLevel
   }
 
   override fun dispose() {

@@ -28,7 +28,10 @@ class BrowserToolWindowFactory : ToolWindowFactory {
 
     toolWindow.setAdditionalGearActions(DefaultActionGroup(listOf(
       actionManager.getAction("dev.matkoch.ideBrowser.OpenUrlAction"),
-      actionManager.getAction("dev.matkoch.ideBrowser.OpenDevToolsAction")
+      actionManager.getAction("dev.matkoch.ideBrowser.OpenDevToolsAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.ResetZoomAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.IncreaseZoomAction"),
+      actionManager.getAction("dev.matkoch.ideBrowser.DecreaseZoomAction")
     )))
   }
 }

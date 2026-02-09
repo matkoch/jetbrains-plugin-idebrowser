@@ -10,6 +10,7 @@
   <change-notes>
     <![CDATA[
       <ul>
+        <li><b>1.2.0</b> Added actions to increase/decrease/reset zoom level.</li>
         <li><b>1.1.0</b> Added actions for Home, Back, and Forward.</li>
         <li><b>1.0.2</b> Fixed greedy focus.</li>
         <li><b>1.0.1</b> Fixed actions.</li>
@@ -58,6 +59,29 @@
             text="Open DevTools"
             icon="AllIcons.Debugger.Console"
             description="Open JCEF DevTools"/>
+    <action id="dev.matkoch.ideBrowser.ResetZoomAction"
+            class="dev.matkoch.ideBrowser.ResetZoomAction"
+            text="Reset Zoom"
+            icon="AllIcons.General.ActualZoom"
+            description="Reset zoom level">
+      <keyboard-shortcut first-keystroke="shift meta 0" keymap="$default"/>
+    </action>
+    <action id="dev.matkoch.ideBrowser.IncreaseZoomAction"
+            class="dev.matkoch.ideBrowser.IncreaseZoomAction"
+            text="Increase Zoom"
+            icon="AllIcons.General.ZoomIn"
+            description="Increase zoom level">
+      <keyboard-shortcut first-keystroke="shift meta EQUALS" keymap="$default"/>
+      <keyboard-shortcut first-keystroke="shift meta ADD" keymap="$default"/>
+    </action>
+    <action id="dev.matkoch.ideBrowser.DecreaseZoomAction"
+            class="dev.matkoch.ideBrowser.DecreaseZoomAction"
+            text="Decrease Zoom"
+            icon="AllIcons.General.ZoomOut"
+            description="Decrease zoom level">
+      <keyboard-shortcut first-keystroke="shift meta MINUS" keymap="$default"/>
+      <keyboard-shortcut first-keystroke="shift meta SUBTRACT" keymap="$default"/>
+    </action>
   </actions>
 
 </idea-plugin>
