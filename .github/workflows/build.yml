@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  cache-idea-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache IDEA SDK
+        uses: ./.github/actions/cache-sdk
+        with:
+          sdk: idea
+
+  cache-rider-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Rider SDK
+        uses: ./.github/actions/cache-sdk
+        with:
+          sdk: rider
+
+  build:
+    needs: [cache-idea-sdk, cache-rider-sdk]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup build environment
+        uses: ./.github/actions/setup-build
+
+      - name: Build plugin
+        id: build
+        run: |
+          $version = dotnet dnx minver-cli -y -- -p alpha -v warn
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          ./scripts/build-plugin.ps1 -Version $version
+        shell: pwsh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugins-${{ steps.build.outputs.version }}
+          path: |
+            artifacts/*.zip
+            artifacts/*.nupkg
+          if-no-files-found: error

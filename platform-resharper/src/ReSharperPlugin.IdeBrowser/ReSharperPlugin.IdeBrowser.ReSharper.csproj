@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>ReSharperPlugin.IdeBrowser</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <DefineConstants>$(DefineConstants);RESHARPER</DefineConstants>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IsPackable>true</IsPackable>
+
+    <WaveVersion>$(SdkVersion.Substring(2,2))$(SdkVersion.Substring(5,1)).0.0</WaveVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Xaml"/>
+    <PackageReference Include="JetBrains.ReSharper.SDK" Version="$(SdkVersion)" PrivateAssets="all"/>
+    <PackageReference Include="Wave" Version="$(WaveVersion)"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\..\dependencies.json" PackagePath="" Pack="true" Visible="false"/>
+    <Content Include="bin\$(MSBuildProjectName)\$(Configuration)\$(AssemblyName).dll" PackagePath="dotFiles" Pack="true" Visible="false"/>
+    <Content Include="bin\$(MSBuildProjectName)\$(Configuration)\$(AssemblyName).pdb" PackagePath="dotFiles" Pack="true" Visible="false"/>
+  </ItemGroup>
+
+</Project>

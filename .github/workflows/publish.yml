@@ -1,0 +1,111 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  cache-idea-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache IDEA SDK
+        uses: ./.github/actions/cache-sdk
+        with:
+          sdk: idea
+
+  cache-rider-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Rider SDK
+        uses: ./.github/actions/cache-sdk
+        with:
+          sdk: rider
+
+  build:
+    needs: [cache-idea-sdk, cache-rider-sdk]
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup build environment
+        uses: ./.github/actions/setup-build
+
+      - name: Get version
+        id: version
+        run: |
+          $version = dotnet dnx minver-cli --yes
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "Version: $version"
+        shell: pwsh
+
+      - name: Build plugin
+        run: ./scripts/build-plugin.ps1 -Version ${{ steps.version.outputs.version }}
+        shell: pwsh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugins-${{ steps.version.outputs.version }}
+          path: |
+            artifacts/*.zip
+            artifacts/*.nupkg
+          if-no-files-found: error
+
+  publish-intellij:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore IDEA SDK cache
+        uses: ./.github/actions/cache-sdk
+        with:
+          sdk: idea
+          download-if-missing: 'false'
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: plugins-${{ needs.build.outputs.version }}
+          path: artifacts
+
+      - name: Publish to JetBrains Marketplace
+        run: ./scripts/publish-plugin.ps1 -SkipBuild -SkipReSharper
+        shell: pwsh
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+
+  publish-resharper:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: plugins-${{ needs.build.outputs.version }}
+          path: artifacts
+
+      - name: Publish to JetBrains Marketplace
+        run: ./scripts/publish-plugin.ps1 -SkipBuild -SkipIntelliJ
+        shell: pwsh
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

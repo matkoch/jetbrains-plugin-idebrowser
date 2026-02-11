@@ -1,0 +1,65 @@
+<idea-plugin package="dev.matkoch.ideBrowser.core">
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="Browser" secondary="true" icon="AllIcons.Toolwindows.WebToolWindow" anchor="right"
+                factoryClass="dev.matkoch.ideBrowser.core.ui.BrowserToolWindowFactory"/>
+    <notificationGroup id="IDE Browser Notifications" displayType="BALLOON"/>
+    <stepsBeforeRunProvider implementation="dev.matkoch.ideBrowser.core.run.LaunchIdeBrowserBeforeRunTaskProvider"/>
+    <httpRequestHandler implementation="dev.matkoch.ideBrowser.core.http.IdeBrowserHttpHandler"/>
+  </extensions>
+
+  <actions>
+    <action id="dev.matkoch.ideBrowser.core.actions.BackAction"
+            class="dev.matkoch.ideBrowser.core.actions.BackAction"
+            text="Back"
+            icon="AllIcons.Actions.Back"
+            description="Go back"/>
+    <action id="dev.matkoch.ideBrowser.core.actions.ForwardAction"
+            class="dev.matkoch.ideBrowser.core.actions.ForwardAction"
+            text="Forward"
+            icon="AllIcons.Actions.Forward"
+            description="Go forward"/>
+    <action id="dev.matkoch.ideBrowser.core.actions.HomeAction"
+            class="dev.matkoch.ideBrowser.core.actions.HomeAction"
+            text="Home"
+            icon="AllIcons.Nodes.HomeFolder"
+            description="Go to home URL"/>
+    <action id="dev.matkoch.ideBrowser.core.actions.OpenUrlAction"
+            class="dev.matkoch.ideBrowser.core.actions.OpenUrlAction"
+            text="Open URL"
+            icon="AllIcons.General.Locate"
+            description="Browser: Open URL from Clipboard"/>
+    <action id="dev.matkoch.ideBrowser.core.actions.ReloadPageAction"
+            class="dev.matkoch.ideBrowser.core.actions.ReloadPageAction"
+            text="Reload Page"
+            icon="AllIcons.Actions.Refresh"
+            description="Reload current page"/>
+    <action id="dev.matkoch.ideBrowser.core.actions.OpenDevToolsAction"
+            class="dev.matkoch.ideBrowser.core.actions.OpenDevToolsAction"
+            text="Open DevTools"
+            icon="AllIcons.Debugger.Console"
+            description="Open JCEF DevTools"/>
+    <action id="dev.matkoch.ideBrowser.core.actions.ResetZoomAction"
+            class="dev.matkoch.ideBrowser.core.actions.ResetZoomAction"
+            text="Reset Zoom"
+            icon="AllIcons.General.ActualZoom"
+            description="Reset zoom level">
+      <keyboard-shortcut first-keystroke="shift meta 0" keymap="$default"/>
+    </action>
+    <action id="dev.matkoch.ideBrowser.core.actions.IncreaseZoomAction"
+            class="dev.matkoch.ideBrowser.core.actions.IncreaseZoomAction"
+            text="Increase Zoom"
+            icon="AllIcons.General.ZoomIn"
+            description="Increase zoom level">
+      <keyboard-shortcut first-keystroke="shift meta EQUALS" keymap="$default"/>
+      <keyboard-shortcut first-keystroke="shift meta ADD" keymap="$default"/>
+    </action>
+    <action id="dev.matkoch.ideBrowser.core.actions.DecreaseZoomAction"
+            class="dev.matkoch.ideBrowser.core.actions.DecreaseZoomAction"
+            text="Decrease Zoom"
+            icon="AllIcons.General.ZoomOut"
+            description="Decrease zoom level">
+      <keyboard-shortcut first-keystroke="shift meta MINUS" keymap="$default"/>
+      <keyboard-shortcut first-keystroke="shift meta SUBTRACT" keymap="$default"/>
+    </action>
+  </actions>
+</idea-plugin>

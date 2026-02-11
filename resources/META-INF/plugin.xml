@@ -1,0 +1,10 @@
+<idea-plugin>
+  <depends>com.intellij.modules.platform</depends>
+
+  <content>
+    <module name="dev.matkoch.ideBrowser.core"/>
+    <module name="dev.matkoch.ideBrowser.idea"/>
+    <module name="dev.matkoch.ideBrowser.rider"/>
+  </content>
+
+</idea-plugin>

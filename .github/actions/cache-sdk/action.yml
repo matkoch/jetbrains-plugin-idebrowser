@@ -1,0 +1,38 @@
+name: Cache SDK
+description: Cache and optionally download IntelliJ IDEA or Rider SDK
+
+inputs:
+  sdk:
+    description: 'SDK to cache: idea or rider'
+    required: true
+  download-if-missing:
+    description: 'Download SDK if not cached'
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Check ${{ inputs.sdk }} SDK cache
+      id: cache-check
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ inputs.sdk }}-sdk-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+        lookup-only: ${{ inputs.download-if-missing == 'true' }}
+
+    - name: Download ${{ inputs.sdk }} SDK
+      if: inputs.download-if-missing == 'true' && steps.cache-check.outputs.cache-hit != 'true'
+      run: ./scripts/cache-${{ inputs.sdk }}-sdk.ps1
+      shell: pwsh
+
+    - name: Save ${{ inputs.sdk }} SDK cache
+      if: inputs.download-if-missing == 'true' && steps.cache-check.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ inputs.sdk }}-sdk-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}

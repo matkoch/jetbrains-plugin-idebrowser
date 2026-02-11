@@ -1,0 +1,38 @@
+[versions]
+# https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/maven-metadata.xml
+kotlin = "2.3.10"
+
+# https://plugins.gradle.org/m2/org/jetbrains/intellij/platform/org.jetbrains.intellij.platform.gradle.plugin/maven-metadata.xml
+gradleIntelliJPlatform = "2.11.0"
+
+# https://plugins.gradle.org/m2/me/filippov/gradle/jvm/wrapper/me.filippov.gradle.jvm.wrapper.gradle.plugin/maven-metadata.xml
+gradleJvmWrapper = "0.15.0"
+
+# https://plugins.gradle.org/m2/org/jetbrains/changelog/org.jetbrains.changelog.gradle.plugin/maven-metadata.xml
+changelog = "2.5.0"
+
+# https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/maven-metadata.xml
+ideaSdk = "2025.3.2"
+
+# https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/rider/riderRD/maven-metadata.xml
+riderSdk = "2025.3.2"
+
+# https://repo.maven.apache.org/maven2/com/jetbrains/rd/rd-gen/maven-metadata.xml
+rdGen = "2025.3.1"
+
+# https://repo.maven.apache.org/maven2/junit/junit/maven-metadata.xml
+junit = "4.13.2"
+
+[libraries]
+kotlinStdLib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+intellijPlatformPlugin = { group = "org.jetbrains.intellij.platform", name = "org.jetbrains.intellij.platform.gradle.plugin", version.ref = "gradleIntelliJPlatform" }
+intellijPlatformModulePlugin = { group = "org.jetbrains.intellij.platform.module", name = "org.jetbrains.intellij.platform.module.gradle.plugin", version.ref = "gradleIntelliJPlatform" }
+rdGen = { group = "com.jetbrains.rd", name = "rd-gen", version.ref = "rdGen" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+gradleIntelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "gradleIntelliJPlatform" }
+gradleJvmWrapper = { id = "me.filippov.gradle.jvm.wrapper", version.ref = "gradleJvmWrapper" }

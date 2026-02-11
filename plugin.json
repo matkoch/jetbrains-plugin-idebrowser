@@ -1,0 +1,11 @@
+{
+  "intellijId": "dev.matkoch.ideBrowser",
+  "resharperId": "ReSharperPlugin.IdeBrowser",
+  "name": "IDE Browser",
+  "description": "Provides a simple browser tool window in your IDE.",
+  "vendor": "Matthias Koch",
+  "copyright": "Copyright Example Vendor",
+  "projectUrl": "https://github.com/matkoch/rider-idebrowser",
+  "licenseUrl": "https://github.com/matkoch/rider-idebrowser/blob/main/LICENSE",
+  "iconUrl": "https://icon.url"
+}

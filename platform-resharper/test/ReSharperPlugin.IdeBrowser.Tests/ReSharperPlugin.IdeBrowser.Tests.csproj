@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ReSharperPlugin.IdeBrowser\ReSharperPlugin.IdeBrowser.ReSharper.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitHubActionsTestLogger" Version="3.0.1"/>
+    <PackageReference Include="JetBrains.ReSharper.SDK.Tests" Version="$(SdkVersion)"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
+    <PackageReference Include="NUnit3TestAdapter" Version="6.1.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="test/**/*"/>
+    <None Include="test/**/*"/>
+  </ItemGroup>
+
+</Project>

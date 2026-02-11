@@ -1,10 +1,23 @@
+@Suppress("UNCHECKED_CAST")
+val pluginConfig = groovy.json.JsonSlurper().parseText(file("plugin.json").readText()) as Map<String, String>
+
+rootProject.name = pluginConfig["intellijId"]!!
+
 pluginManagement {
-    plugins {
-        kotlin("jvm") version "2.3.0"
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "com.jetbrains.rdgen") {
+                useModule("com.jetbrains.rd:rd-gen:${requested.version}")
+            }
+        }
     }
 }
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-}
 
-rootProject.name = "ide_browser"
+include(":module-core")
+include(":platform-idea")
+include(":platform-rider")
+include(":protocol")

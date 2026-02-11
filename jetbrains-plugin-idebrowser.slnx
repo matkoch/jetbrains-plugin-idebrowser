@@ -1,0 +1,36 @@
+<Solution>
+  <Folder Name="/(root)/">
+    <File Path="CHANGELOG.md" />
+    <File Path="dependencies.json" />
+    <File Path="LICENSE" />
+    <File Path="plugin.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/platform-resharper/">
+    <File Path="platform-resharper\Directory.Build.props" />
+    <File Path="platform-resharper\nuget.config" />
+  </Folder>
+  <Folder Name="/platform-resharper/src/">
+    <Project Path="platform-resharper/src/ReSharperPlugin.IdeBrowser/ReSharperPlugin.IdeBrowser.ReSharper.csproj" />
+    <Project Path="platform-resharper/src/ReSharperPlugin.IdeBrowser/ReSharperPlugin.IdeBrowser.Rider.csproj" />
+  </Folder>
+  <Folder Name="/platform-resharper/test/">
+    <Project Path="platform-resharper/test/ReSharperPlugin.IdeBrowser.Tests/ReSharperPlugin.IdeBrowser.Tests.csproj" />
+  </Folder>
+  <Folder Name="/scripts/">
+    <File Path="scripts\build-plugin.ps1" />
+    <File Path="scripts\cache-idea-sdk.ps1" />
+    <File Path="scripts\cache-rider-sdk.ps1" />
+    <File Path="scripts\change-plugin-ids.ps1" />
+    <File Path="scripts\clean-visualstudio.ps1" />
+    <File Path="scripts\prepare-release.ps1" />
+    <File Path="scripts\publish-plugin.ps1" />
+    <File Path="scripts\run-idea.ps1" />
+    <File Path="scripts\run-resharper.ps1" />
+    <File Path="scripts\run-rider.ps1" />
+    <File Path="scripts\settings.ps1" />
+    <File Path="scripts\setup-windows-env.ps1" />
+    <File Path="scripts\update-catalog.ps1" />
+    <File Path="scripts\update-gradle-wrapper.ps1" />
+  </Folder>
+</Solution>

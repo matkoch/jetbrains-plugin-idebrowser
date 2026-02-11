@@ -1,0 +1,36 @@
+name: Setup Build
+description: Common build setup - free disk space, restore SDK caches, and NuGet cache. Requires checkout to be run first.
+
+runs:
+  using: composite
+  steps:
+    - name: Free disk space
+      uses: jlumbroso/free-disk-space@v1.3.1
+      with:
+        tool-cache: false
+        large-packages: false
+        dotnet: false
+
+    - name: Restore IDEA SDK cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: idea-sdk-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+
+    - name: Restore Rider SDK cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: rider-sdk-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+
+    - name: Cache NuGet
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', '**/Directory.Build.props', '**/Plugin.props') }}
+        restore-keys: |
+          nuget-${{ runner.os }}-

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>ReSharperPlugin.IdeBrowser</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <DefineConstants>$(DefineConstants);RIDER</DefineConstants>
+    <IsPackable>false</IsPackable>
+
+    <JetBrainsRiderRdBackendCommonReference>$(DotNetSdkPath)\Build\PackageReference.JetBrains.Rider.RdBackend.Common.Props</JetBrainsRiderRdBackendCommonReference>
+  </PropertyGroup>
+
+  <Import Project="$(JetBrainsRiderRdBackendCommonReference)" Condition="Exists('$(JetBrainsRiderRdBackendCommonReference)')" />
+
+</Project>

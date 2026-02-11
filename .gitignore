@@ -1,4 +1,25 @@
-/.gradle
-/.intellijPlatform
-/.kotlin
-/build
+# Artifacts
+/artifacts/
+
+# Logs
+/logs/
+
+# IDE
+/.idea/
+
+# Gradle
+.gradle/
+.kotlin/
+build/
+
+# IntelliJ Platform
+/.intellijPlatform/
+
+# .NET
+bin/
+obj/
+
+# Generated files
+*.g.kt
+*.g.cs
+/platform-resharper/nuget.config
