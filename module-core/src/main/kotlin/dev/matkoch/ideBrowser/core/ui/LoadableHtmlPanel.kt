@@ -31,7 +31,7 @@ class LoadableHtmlPanel(
   private var originalUrl: String? = null
 
   private val loadingPanel = JBLoadingPanel(BorderLayout(), this).apply { setLoadingText(CommonBundle.getLoadingTreeNodeText()) }
-  private val alarm = Alarm()
+  private val alarm = Alarm(this)
 
   val browser: JBCefBrowserBase get() = htmlPanelComponent
 

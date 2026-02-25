@@ -14,7 +14,7 @@ import java.awt.Color
 import java.awt.datatransfer.DataFlavor
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import java.net.URL
+import java.net.URI
 import javax.swing.JPanel
 
 class UrlInputComponent(
@@ -90,7 +90,7 @@ class UrlInputComponent(
 
     private fun isValidUrl(url: String): Boolean {
         return try {
-            URL(url)
+            URI(url).toURL()
             true
         } catch (_: Exception) {
             false

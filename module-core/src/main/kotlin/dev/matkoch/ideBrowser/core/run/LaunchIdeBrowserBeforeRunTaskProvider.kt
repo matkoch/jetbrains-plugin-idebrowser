@@ -6,13 +6,22 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.wm.ToolWindowManager
+import com.intellij.ui.dsl.builder.AlignX
+import com.intellij.ui.dsl.builder.COLUMNS_MEDIUM
+import com.intellij.ui.dsl.builder.columns
+import com.intellij.ui.dsl.builder.panel
 import dev.matkoch.ideBrowser.core.ui.DATA_KEY
+import org.jetbrains.concurrency.Promise
+import org.jetbrains.concurrency.resolvedPromise
 import javax.swing.Icon
+import javax.swing.JTextField
 
-class LaunchIdeBrowserBeforeRunTaskProvider : BeforeRunTaskProvider<LaunchIdeBrowserBeforeRunTask>() {
+internal val ID: Key<LaunchIdeBrowserBeforeRunTask> = Key.create("LaunchIdeBrowser.Before.Run")
+
+internal class LaunchIdeBrowserBeforeRunTaskProvider : BeforeRunTaskProvider<LaunchIdeBrowserBeforeRunTask>(), DumbAware {
 
   override fun getId(): Key<LaunchIdeBrowserBeforeRunTask> = ID
 
@@ -20,30 +29,40 @@ class LaunchIdeBrowserBeforeRunTaskProvider : BeforeRunTaskProvider<LaunchIdeBro
 
   override fun getIcon(): Icon = AllIcons.Toolwindows.WebToolWindow
 
-  override fun createTask(runConfiguration: RunConfiguration): LaunchIdeBrowserBeforeRunTask {
-    return LaunchIdeBrowserBeforeRunTask(ID)
-  }
-
   override fun isConfigurable(): Boolean = true
 
-  @Deprecated("Deprecated in Java")
+  override fun createTask(runConfiguration: RunConfiguration): LaunchIdeBrowserBeforeRunTask = LaunchIdeBrowserBeforeRunTask()
+
   override fun configureTask(
+    context: DataContext,
     runConfiguration: RunConfiguration,
     task: LaunchIdeBrowserBeforeRunTask
-  ): Boolean {
-    val newUrl = Messages.showInputDialog(
-      runConfiguration.project,
-      "Enter URL:",
-      "Launch IDE Browser",
-      null,
-      task.url,
-      null
-    )
-    if (newUrl != null) {
-      task.url = newUrl
-      return true
+  ): Promise<Boolean> {
+    val state = task.state
+    val modificationCount = state.modificationCount
+
+    val urlField = JTextField()
+    state.url?.let {
+      urlField.text = it
     }
-    return false
+
+    val panel = panel {
+      row("URL:") {
+        cell(urlField)
+          .align(AlignX.FILL)
+          .columns(COLUMNS_MEDIUM)
+      }
+    }
+
+    com.intellij.openapi.ui.DialogBuilder(runConfiguration.project).apply {
+      setTitle("Launch IDE Browser")
+      setCenterPanel(panel)
+      showModal(true)
+    }
+
+    state.url = urlField.text
+
+    return resolvedPromise(modificationCount != state.modificationCount)
   }
 
   override fun executeTask(
@@ -53,7 +72,7 @@ class LaunchIdeBrowserBeforeRunTaskProvider : BeforeRunTaskProvider<LaunchIdeBro
     task: LaunchIdeBrowserBeforeRunTask
   ): Boolean {
     val project = configuration.project
-    val url = task.url ?: return true
+    val url = task.state.url ?: return true
 
     ApplicationManager.getApplication().invokeLater {
       val toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Browser")
@@ -67,5 +86,3 @@ class LaunchIdeBrowserBeforeRunTaskProvider : BeforeRunTaskProvider<LaunchIdeBro
     return true
   }
 }
-
-val ID: Key<LaunchIdeBrowserBeforeRunTask> = Key.create("LaunchIdeBrowserBeforeRunTaskProvider")

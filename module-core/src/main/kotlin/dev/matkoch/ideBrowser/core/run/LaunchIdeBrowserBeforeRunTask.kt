@@ -1,22 +1,17 @@
 package dev.matkoch.ideBrowser.core.run
 
 import com.intellij.execution.BeforeRunTask
+import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.util.Key
-import org.jdom.Element
 
-class LaunchIdeBrowserBeforeRunTask(providerId: Key<LaunchIdeBrowserBeforeRunTask>) :
-  BeforeRunTask<LaunchIdeBrowserBeforeRunTask>(providerId) {
-  var url: String? = null
+internal class LaunchIdeBrowserBeforeRunTask : BeforeRunTask<LaunchIdeBrowserBeforeRunTask>(ID),
+                                               PersistentStateComponent<LaunchIdeBrowserBeforeRunTaskState> {
+  private var state = LaunchIdeBrowserBeforeRunTaskState()
 
-  @Deprecated("Deprecated in Java", ReplaceWith("super.writeExternal(element)"))
-  override fun writeExternal(element: Element) {
-    super.writeExternal(element)
-    url?.let { element.setAttribute("url", it) }
+  override fun loadState(state: LaunchIdeBrowserBeforeRunTaskState) {
+    state.resetModificationCount()
+    this.state = state
   }
 
-  @Deprecated("Deprecated in Java", ReplaceWith("super.readExternal(element)"))
-  override fun readExternal(element: Element) {
-    super.readExternal(element)
-    url = element.getAttributeValue("url")
-  }
+  override fun getState(): LaunchIdeBrowserBeforeRunTaskState = state
 }
