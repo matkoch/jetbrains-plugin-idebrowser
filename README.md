@@ -21,3 +21,8 @@ Java and .NET run configurations get a `IDE_BROWSER_ENDPOINT` environment variab
 # Open a URL
 GET <IDE_BROWSER_ENDPOINT>/open?url=<url>
 ```
+
+## Usage Examples
+
+> [!TIP]
+> Enable `toolwindow.open.tab.in.editor` in your [IntelliJ IDE Registry](https://youtrack.jetbrains.com/articles/SUPPORT-A-1030/How-to-edit-IntelliJ-IDE-Registry) to allow popping out the browser tool window into an editor tab.
