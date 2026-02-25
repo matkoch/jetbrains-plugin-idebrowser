@@ -1,5 +1,4 @@
 <idea-plugin>
-  <depends>com.intellij.modules.platform</depends>
 
   <content>
     <module name="dev.matkoch.ideBrowser.core"/>

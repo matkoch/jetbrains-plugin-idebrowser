@@ -1,10 +1,11 @@
 <idea-plugin package="dev.matkoch.ideBrowser.idea">
-    <dependencies>
-        <plugin id="com.intellij.modules.platform"/>
-        <plugin id="com.intellij.java"/>
-    </dependencies>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <runConfigurationExtension implementation="dev.matkoch.ideBrowser.idea.IdeBrowserRunConfigurationExtension"/>
-    </extensions>
+  <dependencies>
+    <plugin id="com.intellij.java"/>
+  </dependencies>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <runConfigurationExtension implementation="dev.matkoch.ideBrowser.idea.IdeBrowserRunConfigurationExtension"/>
+  </extensions>
+
 </idea-plugin>

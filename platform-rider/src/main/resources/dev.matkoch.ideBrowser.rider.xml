@@ -1,9 +1,11 @@
 <idea-plugin package="dev.matkoch.ideBrowser.rider">
-    <dependencies>
-        <plugin id="com.intellij.modules.rider"/>
-    </dependencies>
 
-    <extensions defaultExtensionNs="com.intellij.rider">
-        <patchCommandLine implementation="dev.matkoch.ideBrowser.rider.IdeBrowserPatchCommandLineExtension" order="last"/>
-    </extensions>
+  <dependencies>
+    <plugin id="com.intellij.modules.rider"/>
+  </dependencies>
+
+  <extensions defaultExtensionNs="com.intellij.rider">
+    <patchCommandLine implementation="dev.matkoch.ideBrowser.rider.IdeBrowserPatchCommandLineExtension" order="last"/>
+  </extensions>
+
 </idea-plugin>
